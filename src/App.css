@@ -30,24 +30,24 @@
 }
 
 .Circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
   margin: 5px;
 }
 
 .Pin {
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  margin: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  margin: 3px;
 }
 
 .Game {
   margin: auto;
   display: flex;
   justify-content: space-between;
-  width: 460px;
+  width: 390px;
   background-color: tomato;
   border-radius: 20px;
   margin-top: 20px;
@@ -108,18 +108,18 @@
 }
 
 .PinSlot {
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
   background-color: black;
-  border-radius: 10px;
+  border-radius: 7px;
   margin: 2px;
 }
 
 .Slot {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   background-color: black;
-  border-radius: 25px;
+  border-radius: 20px;
   margin: 5px;
 }
 
