@@ -9,17 +9,17 @@ export function initGame(guesses, slots) {
   };
 }
 
+export function getCurrentGuessIndex(data) {
+  return data.guesses.findIndex(guess => guess.some(slot => slot === undefined));
+}
+
 export function fillSlot(data, color) {
-  const guess = data.guesses.find(guess => guess.some(slot => slot === undefined));
+  const guess = data.guesses[getCurrentGuessIndex(data)];
   if (guess && guess.indexOf(color) === -1) {
     const i = guess.indexOf(undefined);
     guess.splice(i, 1, color);
   }
   return data;
-}
-
-export function getCurrentGuessIndex(data) {
-  return data.guesses.findIndex(guess => guess.some(slot => slot === undefined));
 }
 
 export function emptySlot(data, guess, slot) {

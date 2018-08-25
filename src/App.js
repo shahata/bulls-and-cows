@@ -3,10 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 import { initGame, fillSlot, emptySlot, getGuesses, colors, isSolved, getAnswer, getCurrentGuessIndex } from './game';
 
-const Pin = props => <div className="Pin" style={{backgroundColor: props.answer === 'bull' ? 'red' : 'yellow'}}></div>;
+const Pin = props => <div className={`Pin ${props.answer}`}></div>;
 const Circle = props => <div className="Circle" onClick={props.onClick} style={{backgroundColor: props.color}}></div>;
 const Palette = props => <div className="Palette">{colors.map(color => <Circle onClick={() => props.onClick(color)} key={color} color={color}/>)}</div>;
-const Answer = props => <div className="Answer">{props.answer ? props.answer.map(color => <Circle color={color}/>) : null}</div>
+const Answer = props => <div className="Answer">{props.answer ? props.answer.map(color => <Circle key={color} color={color}/>) : null}</div>
 
 class Game extends Component {
   state = {
