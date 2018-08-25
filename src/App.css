@@ -19,6 +19,7 @@
 }
 
 .NewGame {
+  user-select: none;
   font-size: 40px;
   cursor: pointer;
   margin: auto;
