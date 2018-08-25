@@ -18,8 +18,10 @@
   font-size: 1.5em;
 }
 
-.App-intro {
-  font-size: large;
+.NewGame {
+  font-size: 40px;
+  cursor: pointer;
+  margin: auto;
 }
 
 @keyframes App-logo-spin {
@@ -28,9 +30,9 @@
 }
 
 .Circle {
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
   margin: 5px;
 }
 
@@ -42,32 +44,40 @@
 }
 
 .Game {
-  padding-top: 20px;
   margin: auto;
   display: flex;
-
   justify-content: space-between;
-  width: 600px;
+  width: 460px;
+  background-color: tomato;
+  border-radius: 20px;
+  margin-top: 20px;
 }
 
 .Board {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  height: 1000px;
-  width: 500px;
+  justify-content: space-between;
+  height: 750px;
+  padding: 5px;
   background-color: darkblue;
+  border-radius: 20px;
 }
 
 .Palette {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 600px;
+  height: 400px;
+  padding: 10px;
 }
 
 .Palette .Circle {
   border: black 1px solid;
+  cursor: pointer;
+}
+
+.Current .Circle {
+  cursor: pointer;
 }
 
 .Answer .Circle {
@@ -84,7 +94,6 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 100px;
   height: 50px;
 }
 
@@ -92,7 +101,6 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 300px;
 }
 
 .PinSlot:nth-of-type(odd) {
@@ -104,23 +112,27 @@
   height: 20px;
   background-color: black;
   border-radius: 10px;
+  margin: 2px;
 }
 
 .Slot {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background-color: black;
-  border-radius: 30px;
+  border-radius: 25px;
+  margin: 5px;
 }
 
 .Counter {
-  color: white;
-  font-size: 50px;
+  color: silver;
+  font-size: 30px;
+  margin: 5px;
 }
 
 .Answer {
-  background-color: yellow;
+  background-color: lightskyblue;
   display: flex;
   justify-content: center;
-  height: 62px;
+  height: 52px;
+  border-radius: 15px;
 }

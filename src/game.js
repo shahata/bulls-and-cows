@@ -18,8 +18,12 @@ export function fillSlot(data, color) {
   return data;
 }
 
+export function getCurrentGuessIndex(data) {
+  return data.guesses.findIndex(guess => guess.some(slot => slot === undefined));
+}
+
 export function emptySlot(data, guess, slot) {
-  const current = data.guesses.findIndex(guess => guess.some(slot => slot === undefined));
+  const current = getCurrentGuessIndex(data);
   if (current === guess) {
     data.guesses[guess][slot] = undefined;
   }
@@ -31,7 +35,15 @@ export function getGuesses(data) {
     if (guess.some(slot => slot === undefined)) {
       return {guess, result: guess.map(x => undefined)};
     } else {
-      return {guess, result: guess.map((x, i) => x === data.answer[i] ? 'bull' : data.answer.indexOf(x) > -1 ? 'cow' : undefined).sort()};
+      return {guess, result: guess.map((x, i) => {
+        if (x === data.answer[i]) {
+          return 'bull';
+        } else if (data.answer.indexOf(x) > -1) {
+          return 'cow';
+        } else {
+          return undefined;
+        }
+      }).sort()};
     }
   })
 }
@@ -40,8 +52,10 @@ export function isSolved(data) {
   return getGuesses(data).some(({result}) => result.every(x => x ==='bull'));
 }
 
-export function getLoserAnswer(data) {
-  if (getGuesses(data).every(({guess, result}) => guess.every(x => x !== undefined) && !result.every(x => x === 'bull'))) {
+export function getAnswer(data) {
+  if (isSolved(data) || getGuesses(data).every(({guess, result}) => guess.every(x => x !== undefined))) {
     return data.answer;
+  } else {
+    return undefined;
   }
 }

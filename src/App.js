@@ -1,42 +1,20 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { initGame, fillSlot, emptySlot, getGuesses, colors, isSolved, getLoserAnswer } from './game';
+import { initGame, fillSlot, emptySlot, getGuesses, colors, isSolved, getAnswer, getCurrentGuessIndex } from './game';
 
-const Answer = props => <div className="Pin" style={{backgroundColor: props.answer === 'bull' ? 'red' : 'yellow'}}></div>;
+const Pin = props => <div className="Pin" style={{backgroundColor: props.answer === 'bull' ? 'red' : 'yellow'}}></div>;
 const Circle = props => <div className="Circle" onClick={props.onClick} style={{backgroundColor: props.color}}></div>;
-const Palette = props => <div className="Palette">{colors.map(color => <Circle onClick={() => props.onClick(color)} color={color}/>)}</div>;
-const Loser = props => <div className="Answer">{props.answer ? props.answer.map(color => <Circle color={color}/>) : null}</div>
-
-class Board extends Component {
-  render() {
-    return (
-      <div className="Board">
-        {this.props.guesses.map(({guess, result}, i) => (
-          <div className="Row">
-            <div className="Result">
-              {result.map(answer => <div className="PinSlot">{answer ? <Answer answer={answer}/> :  null}</div>)}
-            </div>
-            <div className="Counter">{i + 1}</div>
-            <div className="Guess">
-              {guess.map((color, slot) => <div className="Slot">{color ? <Circle onClick={() => this.props.onClick(i, slot)} color={color}/> :  null}</div>)}
-            </div>
-          </div>
-        ))}
-        <Loser answer={this.props.answer}/>
-      </div>
-    );
-  }
-}
+const Palette = props => <div className="Palette">{colors.map(color => <Circle onClick={() => props.onClick(color)} key={color} color={color}/>)}</div>;
+const Answer = props => <div className="Answer">{props.answer ? props.answer.map(color => <Circle color={color}/>) : null}</div>
 
 class Game extends Component {
   state = {
-    started: false
+    data: initGame(10, 4)
   };
 
   startGame() {
-    alert('מתחילים');
-    this.setState({started: true, data: initGame(10, 4)});
+    this.setState({data: initGame(10, 4)});
   }
 
   fillSlot(color) {
@@ -48,10 +26,10 @@ class Game extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.data && isSolved(this.state.data)) {
+    if (isSolved(this.state.data)) {
       setTimeout(() => {
         alert('כל הכבוד!');
-        this.setState({started: false, data: undefined});
+        this.startGame();
       }, 100);
     }
   }
@@ -59,12 +37,24 @@ class Game extends Component {
   render() {
     return (
       <div>
-        <button onClick={() => this.startGame()}>שלום</button>
-        {this.state.started ?
+        <span className="NewGame" role="img" aria-label="New Game" onClick={() => this.startGame()}>🔄</span>
           <div className="Game">
-            <Board answer={getLoserAnswer(this.state.data)} guesses={getGuesses(this.state.data)} onClick={(guess, slot) => this.emptySlot(guess, slot)}/>
+            <div className="Board">
+              {getGuesses(this.state.data).map(({guess, result}, i) => (
+                <div className="Row" key={i}>
+                  <div className="Result">
+                    {result.map((answer, index) => <div key={index} className="PinSlot">{answer ? <Pin answer={answer}/> :  null}</div>)}
+                  </div>
+                  <div className="Counter">{i + 1}</div>
+                  <div className={getCurrentGuessIndex(this.state.data) === i ? 'Guess Current' : 'Guess'}>
+                    {guess.map((color, slot) => <div className="Slot" key={slot}>{color ? <Circle onClick={() => this.emptySlot(i, slot)} color={color}/> :  null}</div>)}
+                  </div>
+                </div>
+              ))}
+              <Answer answer={getAnswer(this.state.data)}/>
+            </div>
             <Palette onClick={color => this.fillSlot(color)}/>
-          </div> : null}
+          </div>
       </div>
     )
   }
@@ -78,9 +68,6 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">בול פגיעה</h1>
         </header>
-        <p className="App-intro">
-          גל תלמי
-        </p>
         <Game/>
       </div>
     );
