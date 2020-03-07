@@ -1,4 +1,4 @@
-import {shuffle} from 'lodash';
+import { shuffle } from 'lodash';
 
 export const colors = ['red', 'yellow', 'green', 'orange', 'pink', 'purple', 'blue', 'white'];
 
@@ -33,27 +33,29 @@ export function emptySlot(data, guess, slot) {
 export function getGuesses(data) {
   return data.guesses.map(guess => {
     if (guess.some(slot => slot === undefined)) {
-      return {guess, result: guess.map(x => undefined)};
+      return { guess, result: guess.map(x => undefined) };
     } else {
-      return {guess, result: guess.map((x, i) => {
-        if (x === data.answer[i]) {
-          return 'bull';
-        } else if (data.answer.indexOf(x) > -1) {
-          return 'cow';
-        } else {
-          return undefined;
-        }
-      }).sort()};
+      return {
+        guess, result: guess.map((x, i) => {
+          if (x === data.answer[i]) {
+            return 'bull';
+          } else if (data.answer.indexOf(x) > -1) {
+            return 'cow';
+          } else {
+            return undefined;
+          }
+        }).sort()
+      };
     }
   })
 }
 
 export function isSolved(data) {
-  return getGuesses(data).some(({result}) => result.every(x => x ==='bull'));
+  return getGuesses(data).some(({ result }) => result.every(x => x === 'bull'));
 }
 
 export function getAnswer(data) {
-  if (isSolved(data) || getGuesses(data).every(({guess, result}) => guess.every(x => x !== undefined))) {
+  if (isSolved(data) || getGuesses(data).every(({ guess, result }) => guess.every(x => x !== undefined))) {
     return data.answer;
   } else {
     return undefined;
