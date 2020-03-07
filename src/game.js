@@ -19,7 +19,7 @@ export function fillSlot(data, color) {
     const i = guess.indexOf(undefined);
     guess.splice(i, 1, color);
   }
-  return data;
+  return { ...data };
 }
 
 export function emptySlot(data, guess, slot) {
@@ -27,7 +27,7 @@ export function emptySlot(data, guess, slot) {
   if (current === guess) {
     data.guesses[guess][slot] = undefined;
   }
-  return data;
+  return { ...data };
 }
 
 export function getGuesses(data) {

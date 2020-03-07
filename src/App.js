@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { initGame, fillSlot, emptySlot, getGuesses, colors, isSolved, getAnswer, getCurrentGuessIndex } from './game';
 
@@ -7,54 +7,36 @@ const Circle = props => <div className="Circle" onClick={props.onClick} style={{
 const Palette = props => <div className="Palette">{colors.map(color => <Circle onClick={() => props.onClick(color)} key={color} color={color} />)}</div>;
 const Answer = props => <div className="Answer">{props.answer ? props.answer.map(color => <Circle key={color} color={color} />) : null}</div>
 
-class Game extends Component {
-  state = {
-    data: initGame(10, 4)
-  };
+function Game() {
+  const [game, setGame] = useState(initGame(10, 4));
+  const getBackground = () => isSolved(game) ? 'green' : getAnswer(game) ? 'red' : '';
 
-  startGame() {
-    this.setState({ data: initGame(10, 4) });
-  }
-
-  fillSlot(color) {
-    this.setState({ data: fillSlot(this.state.data, color) });
-  }
-
-  emptySlot(guess, slot) {
-    this.setState({ data: emptySlot(this.state.data, guess, slot) });
-  }
-
-  getBackground() {
-    if (isSolved(this.state.data)) {
-      return 'green';
-    }
-    return getAnswer(this.state.data) ? 'red' : '';
-  }
-
-  render() {
-    return (
-      <div className="App" style={{ backgroundColor: this.getBackground() }}>
-        <span className="NewGame" role="img" aria-label="New Game" onClick={() => this.startGame()}>🔄</span>
-        <div className="Game">
-          <div className="Board">
-            {getGuesses(this.state.data).map(({ guess, result }, i) => (
-              <div className="Row" key={i}>
-                <div className="Result">
-                  {result.map((answer, index) => <div key={index} className="PinSlot">{answer ? <Pin answer={answer} /> : null}</div>)}
-                </div>
-                <div className="Counter">{i + 1}</div>
-                <div className={getCurrentGuessIndex(this.state.data) === i ? 'Guess Current' : 'Guess'}>
-                  {guess.map((color, slot) => <div className="Slot" key={slot}>{color ? <Circle onClick={() => this.emptySlot(i, slot)} color={color} /> : null}</div>)}
-                </div>
+  return (
+    <div className="App" style={{ backgroundColor: getBackground() }}>
+      <span className="NewGame" onClick={() => setGame(initGame(10, 4))}>🔄</span>
+      <div className="Game">
+        <div className="Board">
+          {getGuesses(game).map(({ guess, result }, i) => (
+            <div className="Row" key={i}>
+              <div className="Result">
+                {result.map((answer, index) => <div key={index} className="PinSlot">
+                  {answer ? <Pin answer={answer} /> : null}
+                </div>)}
               </div>
-            ))}
-            <Answer answer={getAnswer(this.state.data)} />
-          </div>
-          <Palette onClick={color => this.fillSlot(color)} />
+              <div className="Counter">{i + 1}</div>
+              <div className={getCurrentGuessIndex(game) === i ? 'Guess Current' : 'Guess'}>
+                {guess.map((color, slot) => <div className="Slot" key={slot}>
+                  {color ? <Circle onClick={() => setGame(emptySlot(game, i, slot))} color={color} /> : null}
+                </div>)}
+              </div>
+            </div>
+          ))}
+          <Answer answer={getAnswer(game)} />
         </div>
+        <Palette onClick={color => setGame(fillSlot(game, color))} />
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default Game;
