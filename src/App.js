@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import './App.css';
 import { initGame, fillSlot, emptySlot, getGuesses, colors, isSolved, getAnswer, getCurrentGuessIndex } from './game';
 
-const Pin = props => <div className={`Pin ${props.answer}`}></div>;
 const Circle = props => <div className="Circle" onClick={props.onClick} style={{ backgroundColor: props.color }}></div>;
-const Palette = props => <div className="Palette">{colors.map(color => <Circle onClick={() => props.onClick(color)} key={color} color={color} />)}</div>;
-const Answer = props => <div className="Answer">{props.answer ? props.answer.map(color => <Circle key={color} color={color} />) : null}</div>
+const Palette = props => <div className="Palette">{colors.map(color => {
+  return <Circle onClick={() => props.onClick(color)} key={color} color={color} />;
+})}</div>;
+const Answer = props => <div className="Answer">{props.answer ? props.answer.map(color => {
+  return <div className="Slot" key={color}><Circle key={color} color={color} /></div>;
+}) : null}</div>
 
 function Game() {
   const [game, setGame] = useState(initGame(10, 4));
@@ -13,14 +16,14 @@ function Game() {
 
   return (
     <div className="App" style={{ backgroundColor: getBackground() }}>
-      <span className="NewGame" onClick={() => setGame(initGame(10, 4))}>🔄</span>
+      <span className="NewGame" role="img" aria-label="Restart" onClick={() => setGame(initGame(10, 4))}>🔄</span>
       <div className="Game">
         <div className="Board">
           {getGuesses(game).map(({ guess, result }, i) => (
             <div className="Row" key={i}>
               <div className="Pins">
                 {result.map((answer, index) => <div key={index} className="PinSlot">
-                  {answer ? <Pin answer={answer} /> : null}
+                  {answer ? <div className={`Pin ${answer}`}></div> : null}
                 </div>)}
               </div>
               <div className="Counter">{i + 1}</div>

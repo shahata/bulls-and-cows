@@ -34,8 +34,8 @@ body {
   flex-direction: column;
   justify-content: space-evenly;
   height: 100vh;
-  max-height: calc(var(--board-min-height) + var(--circle-size) * 10);
-  min-height: calc(var(--board-min-height) + var(--circle-size) * 3);
+  max-height: calc(var(--board-min-height) + var(--circle-size) * 9);
+  min-height: calc(var(--board-min-height) + var(--circle-size) * 2);
 }
 
 .Board {
@@ -133,9 +133,9 @@ body {
 .Slot {
   width: calc(var(--circle-size) + var(--padding-size) * 2);
   height: calc(var(--circle-size) + var(--padding-size) * 2);
-  background-color: black;
   border-radius: calc(var(--circle-size) / 2 + var(--padding-size));
   margin: var(--padding-size);
+  background-color: black;
 }
 
 .Circle {
@@ -149,14 +149,10 @@ body {
   cursor: pointer;
 }
 
-.Answer .Circle {
-  border: black var(--border-size) solid;
-}
-
 .Answer {
   background-color: lightskyblue;
   display: flex;
   justify-content: center;
-  height: calc(var(--circle-size) + (var(--padding-size) + var(--border-size)) * 2);
+  height: calc(var(--circle-size) + (var(--padding-size) + var(--border-size)) * 4);
   border-radius: calc(var(--circle-size) / 2);
 }
