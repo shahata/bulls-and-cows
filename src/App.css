@@ -1,14 +1,25 @@
+:root {
+  --circle-var: 30;
+  --padding-var: 5;
+  --border-var: 1;
+}
+
 * {
   -webkit-tap-highlight-color: transparent;
 }
 
 html {
-  font-size: 0.2vw;
+  font-size: calc(100vw / var(--board-min-width));
+  --circle-size: calc(1rem * var(--circle-var));
+  --padding-size: calc(1rem * var(--padding-var));
+  --border-size: calc(1rem * var(--border-var));
+  --board-min-height: calc((var(--circle-size) + var(--padding-size) * 4) * 11);
+  --board-min-width: (8 * var(--circle-var) + 32 * var(--padding-var));
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 400px) {
   html {
-     font-size: 1px;
+     font-size: calc(400px / var(--board-min-width));
   }
 }
 
@@ -16,53 +27,87 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  font-size: 30rem;
 }
 
 .App {
   display: flex;
   flex-direction: column;
-  padding: 15rem;
-}
-
-.NewGame {
-  user-select: none;
-  cursor: pointer;
-  margin: auto;
-}
-
-.Game {
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  width: 390rem;
-  background-color: tomato;
-  border-radius: 20rem;
-  margin-top: 20rem;
+  justify-content: space-evenly;
+  height: 100vh;
+  max-height: calc(var(--board-min-height) + var(--circle-size) * 10);
+  min-height: calc(var(--board-min-height) + var(--circle-size) * 3);
 }
 
 .Board {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 750rem;
-  padding: 5rem;
+  height: 90vh;
+  max-height: calc(var(--board-min-height) + var(--circle-size) * 7);
+  min-height: var(--board-min-height);
+  padding: var(--padding-size);
   background-color: darkblue;
-  border-radius: 20rem;
+  border-radius: calc(var(--circle-size) / 2);
 }
 
-.Circle {
-  width: 30rem;
-  height: 30rem;
-  border-radius: 15rem;
-  margin: 5rem;
+.NewGame {
+  user-select: none;
+  cursor: pointer;
+  margin: auto;
+  font-size: var(--circle-size);
+}
+
+.Game {
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  background-color: tomato;
+  border-radius: calc(var(--circle-size) / 2);
+}
+
+.Palette {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(var(--board-min-height) * 0.8);
+  padding: calc(var(--padding-size) * 2);
+}
+
+.Palette .Circle {
+  border: black var(--border-size) solid;
+  cursor: pointer;
+}
+
+.Row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Pins {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: calc(var(--circle-size) + var(--padding-size) * 2);
+}
+
+.PinSlot:nth-of-type(odd) {
+  align-self: flex-start;
+}
+
+.PinSlot {
+  width: calc(var(--circle-size) / 2 - var(--border-size));
+  height: calc(var(--circle-size) / 2 - var(--border-size));
+  background-color: black;
+  border-radius: calc((var(--circle-size) / 2 - var(--border-size)) / 2);
+  margin: calc(var(--border-size) * 2);
 }
 
 .Pin {
-  width: 8rem;
-  height: 8rem;
-  border-radius: 4rem;
-  margin: 3rem;
+  width: calc((var(--circle-size) + var(--border-size) * 2) / 4);
+  height: calc((var(--circle-size) + var(--border-size) * 2) / 4);
+  border-radius: calc((var(--circle-size) + var(--border-size) * 2) / 8);
+  margin: calc((var(--circle-size) / 2 - var(--border-size) * 3) / 4);
 }
 
 .Pin.bull {
@@ -73,38 +118,10 @@ body {
   background-color: yellow;
 }
 
-.Palette {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 400rem;
-  padding: 10rem;
-}
-
-.Palette .Circle {
-  border: black 1rem solid;
-  cursor: pointer;
-}
-
-.Current .Circle {
-  cursor: pointer;
-}
-
-.Answer .Circle {
-  border: black 1rem solid;
-}
-
-.Row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.Result {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  height: 50rem;
+.Counter {
+  color: silver;
+  margin: var(--padding-size);
+  font-size: var(--circle-size);
 }
 
 .Guess {
@@ -113,35 +130,33 @@ body {
   justify-content: space-around;
 }
 
-.PinSlot:nth-of-type(odd) {
-  align-self: flex-start;
-}
-
-.PinSlot {
-  width: 14rem;
-  height: 14rem;
-  background-color: black;
-  border-radius: 7rem;
-  margin: 2rem;
-}
-
 .Slot {
-  width: 40rem;
-  height: 40rem;
+  width: calc(var(--circle-size) + var(--padding-size) * 2);
+  height: calc(var(--circle-size) + var(--padding-size) * 2);
   background-color: black;
-  border-radius: 20rem;
-  margin: 5rem;
+  border-radius: calc(var(--circle-size) / 2 + var(--padding-size));
+  margin: var(--padding-size);
 }
 
-.Counter {
-  color: silver;
-  margin: 5rem;
+.Circle {
+  width: var(--circle-size);
+  height: var(--circle-size);
+  border-radius: calc(var(--circle-size) / 2);
+  margin: var(--padding-size);
+}
+
+.Current .Circle {
+  cursor: pointer;
+}
+
+.Answer .Circle {
+  border: black var(--border-size) solid;
 }
 
 .Answer {
   background-color: lightskyblue;
   display: flex;
   justify-content: center;
-  height: 42rem;
-  border-radius: 15rem;
+  height: calc(var(--circle-size) + (var(--padding-size) + var(--border-size)) * 2);
+  border-radius: calc(var(--circle-size) / 2);
 }

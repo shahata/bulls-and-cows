@@ -18,7 +18,7 @@ function Game() {
         <div className="Board">
           {getGuesses(game).map(({ guess, result }, i) => (
             <div className="Row" key={i}>
-              <div className="Result">
+              <div className="Pins">
                 {result.map((answer, index) => <div key={index} className="PinSlot">
                   {answer ? <Pin answer={answer} /> : null}
                 </div>)}
