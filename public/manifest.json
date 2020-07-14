@@ -1,9 +1,9 @@
 {
-  "short_name": "Bulls and Cows",
-  "name": "Bulls and Cows Game",
+  "short_name": "Bulls & Cows",
+  "name": "Bulls and Cows",
   "icons": [
     {
-      "src": "./favicon.ico",
+      "src": "./bulls-and-cows.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }
