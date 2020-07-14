@@ -8,6 +8,7 @@
 
 # production
 /build
+/bubblewrap
 
 # misc
 .DS_Store

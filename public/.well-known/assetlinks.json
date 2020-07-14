@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "io.github.shahata.bulls_and_cows",
+                   "sha256_cert_fingerprints": ["FC:FC:9A:6A:B7:09:32:55:7B:CF:C3:8E:05:ED:43:A1:D2:E4:52:B8:6F:9D:4B:E4:9E:88:D9:B4:28:5F:01:15"] }
+    }]
